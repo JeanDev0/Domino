@@ -1,0 +1,202 @@
+:root{font-family:system-ui,Segoe UI,sans-serif;color:#fff5dc;background:#071d1b}*{box-sizing:border-box}body{margin:0}header{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:10px 18px;background:#073a37}header strong{font-size:19px;letter-spacing:1px}header small{display:block;font-size:11px}#connection{font-size:12px}main{display:flex;gap:12px;padding:12px;min-height:calc(100vh - 66px)}.panel{width:275px;flex:none;background:#123b37;padding:14px;border-radius:12px;max-height:calc(100vh - 90px);overflow:auto}.panel h2{margin:0}.panel h3{margin-bottom:8px}label{display:block;font-size:13px;margin:9px 0}input,select{width:100%;padding:9px;margin-top:4px;border-radius:6px;border:0;background:#f3f0e2;color:#183d36}button{cursor:pointer;border:0;border-radius:8px;background:#eac46c;color:#2a2c22;font-weight:700;padding:10px;margin:3px}button:disabled{opacity:.45;cursor:not-allowed}#chairs{display:grid;grid-template-columns:1fr 1fr;gap:6px}.chair{background:#285b56;color:white;min-height:58px}.chair.mine{outline:3px solid #edc65d}.chair.taken{background:#34524d}.teamRow{display:flex;align-items:center;gap:5px}.teamRow select{width:110px}.table{flex:1;min-width:0;position:relative;background:radial-gradient(ellipse at center,#0da99b 0%,#07877d 62%,#07685e 100%);border:5px solid #08665d;border-radius:20px;min-height:650px;overflow:hidden}.topline{display:flex;justify-content:space-between;padding:12px 15px;background:#073d39;font-weight:750}.player.corner{position:absolute;background:#efd7bf;color:#262821;padding:8px 12px;border:3px solid #8a6147;border-radius:9px;text-align:center;min-width:115px;z-index:2;font-size:12px}.player b{display:block}.player.active{outline:4px solid #ffcc4c}.player.top{top:48px;left:50%;transform:translateX(-50%)}.player.left{top:38%;left:5px;writing-mode:vertical-rl}.player.right{top:38%;right:5px;writing-mode:vertical-rl}.player.bottom{bottom:160px;left:50%;transform:translateX(-50%)}.felt{position:absolute;top:110px;bottom:230px;left:90px;right:90px;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0}.dropzone{min-width:72px;max-width:92px;padding:9px 5px;border:2px dashed #b1e6ce88;border-radius:9px;font-size:11px;text-align:center;color:#d5fff1;min-height:70px;display:flex;align-items:center;justify-content:center}.dropzone.over{background:#e4c66c88;border-color:#fff}.dropzone.hidden{opacity:.12}#chain{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;align-content:center;gap:3px;max-height:100%;overflow:auto;min-width:0;flex:1}.tile{display:inline-flex;flex-direction:row;align-items:stretch;flex:none;background:#fffaf0;border:2px solid #d4c9ae;border-radius:6px;width:68px;height:35px;box-shadow:0 3px 3px #044a42aa;overflow:hidden;touch-action:none;user-select:none}.tile.double{flex-direction:column;width:35px;height:68px}.half{position:relative;flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:3px;gap:1px}.half+.half{border-left:1.5px solid #a9a69e}.tile.double .half+.half{border-left:0;border-top:1.5px solid #a9a69e}.pip{width:6px;height:6px;align-self:center;justify-self:center;border-radius:50%;background:#e84758}.pip.c0{background:#138bb5}.pip.c1{background:#e74758}.pip.c2{background:#249b55}.pip.c3{background:#ed9719}.tile.clickable{cursor:grab}.tile.clickable:hover{transform:translateY(-5px);outline:2px solid #f4ca56}.tile.dragging{opacity:.45}#announcement{position:absolute;bottom:195px;left:10%;right:10%;text-align:center;font-weight:750;color:#ffe38c;text-shadow:0 2px 3px #024}.topline,#handArea{z-index:2}#handArea{position:absolute;bottom:0;left:0;right:0;text-align:center;background:#063e39e8;padding:8px 8px 12px}#handArea h3{margin:2px 0 8px;font-size:15px}#hand{display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;min-height:75px}#hand .tile:not(.double){transform:rotate(90deg);margin:16px 8px}#hand .tile.clickable:not(.double):hover{transform:rotate(90deg) translateX(-5px)}.actions{display:flex;justify-content:center;gap:5px;flex-wrap:wrap}#hint{font-size:12px;margin:5px;color:#bfe4da}#toast{position:fixed;z-index:10;bottom:22px;left:50%;transform:translateX(-50%);background:#69332a;color:white;padding:14px;border-radius:10px;display:none}dialog{border:0;border-radius:12px;background:#fff4df;color:#183b35;padding:20px}dialog::backdrop{background:#0008}@media(max-width:850px){main{display:block;padding:4px}.panel{width:auto;max-height:none;margin-bottom:8px}.table{min-height:690px}.felt{left:52px;right:52px}.player.corner{min-width:70px;font-size:10px;padding:5px}.player.bottom{bottom:190px}#announcement{bottom:220px}.tile{width:54px;height:29px}.tile.double{width:29px;height:54px}.pip{width:5px;height:5px}}
+
+#hand .hand-tile{cursor:grab}#hand .hand-tile.reorder-target{outline:3px solid #ffcf58;outline-offset:4px}#hand .hand-tile.dragging{opacity:.4}
+
+/* V6: trilha conectada, com curvas nas bordas */
+#chain{position:relative;display:block;flex:1;align-self:stretch;min-height:190px;max-height:none;overflow:hidden}
+#chain .board-tile{position:absolute;transform-origin:center center;margin:0;box-sizing:border-box}
+#closedDialog{max-width:min(450px,90vw);width:100%;max-height:80vh;overflow:auto}
+#closedDetails p{margin:8px 0}
+
+/* V7: mesa adapta-se à tela e mantém a mão do usuário embaixo. */
+#noBuyWrap{display:flex;align-items:center;gap:8px}#noBuyWrap input{width:auto;margin:0}
+main{min-height:calc(100dvh - 66px)}.table{height:max(650px,calc(100dvh - 95px))}
+#chain{width:100%;height:100%}.felt{left:clamp(44px,7vw,100px);right:clamp(44px,7vw,100px)}
+@media(max-width:850px){header{flex-wrap:wrap;padding:8px}main{padding:4px}.table{height:max(580px,calc(100dvh - 115px));min-height:580px}.felt{top:95px;bottom:205px;left:42px;right:42px}.dropzone{min-width:32px;max-width:48px;font-size:9px;padding:4px}.player.left,.player.right{top:32%}.player.bottom{bottom:155px}#announcement{bottom:185px}#handArea{padding:5px}#hand{gap:2px}#hand .tile:not(.double){margin:12px 5px}}
+@media(max-width:480px){.felt{left:28px;right:28px;gap:2px}.dropzone{min-width:26px;max-width:32px;word-break:break-word;font-size:8px}.player.corner{min-width:56px;font-size:9px;padding:4px}.player.left{left:0}.player.right{right:0}#hand .tile{zoom:.85}}
+
+/* V8 — alvos junto às extremidades reais e peças corretamente orientadas */
+.felt{display:block;overflow:visible;pointer-events:none}
+#chain{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:auto}
+.dropzone{position:absolute;z-index:5;width:52px;min-width:52px;height:56px;min-height:56px;max-width:none;padding:3px;border:2px dashed #e9d778aa;background:#114f4888;pointer-events:auto;font-size:10px;line-height:1.1}
+#dropLeft{left:4px;top:calc(50% - 28px)}#dropRight{right:4px;top:calc(50% - 28px)}
+.dropzone.over{background:#ffe49a;color:#173b34;border-color:#fff}
+#chain .board-tile{overflow:hidden;z-index:1;pointer-events:none}
+#hand{overflow-x:auto;flex-wrap:nowrap;justify-content:safe center;touch-action:pan-x;padding:5px 0 8px}
+#hand .hand-tile{flex-shrink:0}
+@media(max-width:850px){.felt{left:36px;right:36px;top:110px;bottom:235px}.dropzone{width:44px;min-width:44px;height:49px;min-height:49px;font-size:9px}#hand{justify-content:flex-start}}
+@media(max-width:480px){.felt{left:15px;right:15px;top:105px;bottom:230px}.dropzone{width:38px;min-width:38px;height:45px;min-height:45px;font-size:8px}}
+
+/* V9: responsive layout — no fixed desktop-sized playing field on phones. */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+[hidden]{display:none!important}
+.table{min-width:0;isolation:isolate}
+#handArea{max-width:100%;box-sizing:border-box}
+#hand{max-width:100%;scrollbar-width:thin;overscroll-behavior-x:contain}
+#hand .tile{flex-shrink:0}
+#chain{contain:layout style}
+.player.corner{max-width:min(29%,175px);overflow-wrap:anywhere}
+.topline{gap:8px}.topline span{min-width:0;overflow-wrap:anywhere}
+@media (max-width:850px){
+ header{min-height:48px;gap:7px;padding:6px 10px}
+ header strong{font-size:clamp(13px,3vw,18px)}
+ header small,#connection{font-size:10px}
+ header button{padding:7px 9px;margin:0;font-size:11px}
+ main{display:flex;flex-direction:column;gap:0;padding:0;min-height:0}
+ .panel{width:100%;max-height:none;margin:0;border-radius:0;flex:none}
+ .table{height:calc(100dvh - 56px);min-height:470px;flex:none;border-width:2px;border-radius:0}
+ .topline{padding:7px 10px;min-height:34px;font-size:11px}
+ .felt{top:83px;bottom:183px;left:40px;right:40px}
+ .player.corner{min-width:0;width:auto;font-size:10px;padding:4px 6px;border-width:2px;max-width:34%}
+ .player.top{top:39px}.player.left,.player.right{top:32%}.player.bottom{bottom:164px}
+ #announcement{bottom:174px;left:12%;right:12%;font-size:11px;pointer-events:none}
+ #handArea{bottom:0;padding:5px 6px max(6px,env(safe-area-inset-bottom));}
+ #handArea h3{font-size:12px;margin:0 0 3px}
+ #hand{min-height:64px;gap:2px;justify-content:flex-start;padding:4px 8px 8px;overflow-x:auto;flex-wrap:nowrap}
+ #hand .tile:not(.double){margin:11px 6px}
+ .actions{gap:2px}.actions button{font-size:12px;padding:7px 10px}
+ #hint{font-size:10px;margin:2px}
+ .dropzone{width:38px;min-width:38px;height:44px;min-height:44px;font-size:8px;padding:2px}
+ body.in-game .panel:not([hidden]){position:fixed;top:52px;bottom:0;left:0;width:min(350px,94vw);z-index:20;max-height:none;overflow-y:auto;box-shadow:0 0 0 100vmax #0009}
+}
+@media (max-width:520px){
+ header{gap:5px}#connection{max-width:75px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .table{height:calc(100dvh - 51px);min-height:410px}
+ .felt{top:78px;bottom:172px;left:19px;right:19px}
+ .player.top{top:37px}.player.left,.player.right{top:26%}.player.bottom{bottom:154px}
+ .player.corner{max-width:40%;font-size:9px;padding:3px 4px}
+ #hand .tile{zoom:1}
+ #hand .tile:not(.double){margin:11px 5px}
+ #handArea{padding:3px 4px max(4px,env(safe-area-inset-bottom))}
+ .dropzone{min-width:32px;width:32px;min-height:38px;height:38px;font-size:7px}
+}
+@media (max-width:850px) and (max-height:650px){
+ .table{height:calc(100dvh - 47px);min-height:345px}
+ header{min-height:43px;padding:3px 8px}
+ .topline{min-height:25px;padding:4px 9px}
+ .felt{top:49px;bottom:124px;left:44px;right:44px}
+ .player.top{top:25px}.player.left,.player.right{top:32%}.player.bottom{bottom:107px}
+ #announcement{bottom:121px;font-size:10px}
+ #handArea h3{font-size:11px}
+ #hand{min-height:52px;padding:2px 5px;max-height:65px}
+ #hand .tile{zoom:.78}
+ #hand .tile:not(.double){margin:7px 1px}
+ .actions button{padding:5px 8px;font-size:10px}
+ #hint{display:none}
+ .dropzone{width:32px;min-width:32px;height:34px;min-height:34px;font-size:7px}
+}
+@media (min-width:851px) and (max-height:760px){
+ main{min-height:0}.table{height:calc(100dvh - 86px);min-height:480px}
+ .felt{top:82px;bottom:196px}.player.bottom{bottom:155px}
+ #announcement{bottom:169px}
+}
+
+/* V10 — cadeia centralizada em dois braços com cotovelos conectados. */
+.felt{display:block;position:absolute;overflow:hidden;pointer-events:none}
+#chain{position:absolute;inset:0;overflow:hidden;contain:none;pointer-events:none}
+#chain .board-tile{position:absolute;width:68px;height:35px;display:flex;z-index:1;pointer-events:none;transform-origin:center center;box-shadow:0 2px 2px #023c3477}
+#chain .board-tile.double{display:flex;flex-direction:column;width:35px;height:68px}
+#chain .board-tile .pip{width:6px;height:6px}
+/* Alvo com forma de peça, sem textos visíveis, sempre na próxima casa real. */
+.dropzone{display:flex;flex-direction:row;position:absolute;z-index:6;transform:translate(-50%,-50%);padding:0;min-width:0;max-width:none;min-height:0;width:68px;height:35px;border:2px dashed rgba(246,244,204,.75);border-radius:5px;background:rgba(245,248,219,.08);box-shadow:0 0 0 2px rgba(0,44,37,.25);color:transparent;touch-action:none;pointer-events:auto;cursor:pointer;overflow:hidden}
+.dropzone.vertical{flex-direction:column}
+.dropzone .ghost-half{flex:1;min-width:0;min-height:0}
+.dropzone:not(.vertical) .ghost-half+.ghost-half{border-left:1px solid rgba(238,238,204,.65)}
+.dropzone.vertical .ghost-half+.ghost-half{border-top:1px solid rgba(238,238,204,.65)}
+.dropzone.over,.dropzone.available{border-color:#ffda62;background:rgba(255,218,98,.25);box-shadow:0 0 0 3px rgba(255,218,98,.2)}
+.dropzone:focus-visible{outline:3px solid #ffdc78;outline-offset:4px}
+.touch-preview{position:fixed!important;left:0;top:0;transform:translate(-50%,-50%) scale(1.1)!important;pointer-events:none!important;z-index:10000;opacity:.85;box-shadow:0 6px 15px #001a1580}
+#hand .tile.touch-preview{margin:0!important}
+/* Os jogadores não podem cobrir a trilha. No modo de partida o painel fica recolhido. */
+body.in-game main{min-height:0}
+body.in-game .table{flex:1}
+body.in-game #lobby:not([hidden]){z-index:50}
+@media(max-width:850px){
+ #chain .board-tile{width:68px;height:35px}
+ #chain .board-tile.double{width:35px;height:68px}
+ #chain .board-tile .pip{width:6px;height:6px}
+ .felt{left:26px;right:26px}
+}
+@media(max-width:520px){
+ .felt{left:12px;right:12px}
+}
+
+/* V10: utilizar a altura REAL de cada tela, inclusive celular em pé. */
+html{height:100%}
+body{height:100%;height:100dvh;display:flex;flex-direction:column;min-height:0}
+header{flex:none}
+main,body.in-game main{height:auto;min-height:0;flex:1;display:flex}
+.table,body.in-game .table{height:100%;min-height:0;flex:1}
+.player.bottom{display:none!important} /* O nome e a mão ficam na barra inferior, fora da trilha. */
+.player.top{top:48px;padding:4px 10px;min-width:120px;font-size:11px}
+.player.left,.player.right{top:38%}
+.felt{top:100px;bottom:155px}
+.topline{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) auto;align-items:center;gap:12px}
+#announcement{display:block;position:static;inset:auto;min-width:0;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin:0;color:#fbe6a5;text-align:center;font-size:12px;font-weight:550;text-shadow:none;pointer-events:none}
+#stock{white-space:nowrap}
+#handArea{padding:5px 7px 6px}
+#handArea h3{margin:0 0 4px}
+#hand{min-height:65px}
+#hint{margin:2px}
+@media(max-width:850px){
+ main,body.in-game main{height:auto;min-height:0;flex:1;display:flex;flex-direction:column}
+ .table,body.in-game .table{height:auto;min-height:0;flex:1 1 auto}
+ .felt{top:86px;bottom:145px;left:26px;right:26px}
+ .player.top{top:37px;font-size:10px;min-width:0;max-width:50%;padding:3px 7px}
+ .player.left,.player.right{top:35%}
+ .topline{padding:5px 9px;gap:5px;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto}
+ #announcement{font-size:10px}
+ #hand{min-height:58px}
+}
+@media(max-width:520px){
+ .felt{top:82px;bottom:137px;left:15px;right:15px}
+ #handArea h3{font-size:11px}
+ #hint{max-height:22px;overflow:hidden}
+ .player.top{top:36px}
+ #announcement{font-size:9px}
+}
+@media(max-width:850px) and (max-height:650px){
+ .felt{top:51px;bottom:108px;left:38px;right:38px}
+ .player.top{top:24px;font-size:9px;padding:2px 4px}
+ .player.left,.player.right{top:32%}
+ .topline{padding:3px 7px}
+ #hand{min-height:42px;max-height:59px}
+}
+
+/* V11 — destaque de turno e anúncio de vencedor. */
+.player.active{outline:3px solid #ffdf6b;outline-offset:2px;box-shadow:0 0 0 3px #685018,0 0 17px #ffd45690;animation:turnGlow 1.45s ease-in-out infinite}
+.player.active b{color:#7a3400;animation:nameBlink 1.45s ease-in-out infinite}
+.turn-label{display:block;font-size:10px;font-weight:850;font-style:normal;letter-spacing:.04em;color:#815000;margin-top:3px;white-space:normal;writing-mode:horizontal-tb}
+.player.left .turn-label,.player.right .turn-label{writing-mode:vertical-rl}
+#handArea.your-turn{box-shadow:inset 0 3px #ffdf6b,0 -5px 26px #f6d85f32}
+#turnNotice{display:flex;align-items:center;justify-content:center;gap:7px;width:fit-content;max-width:100%;margin:0 auto 4px;padding:4px 14px;border-radius:22px;background:#d7e9e1;color:#154740;font-size:11px;font-weight:850;letter-spacing:.045em;white-space:normal}
+#turnNotice[hidden]{display:none!important}
+#turnNotice.own-turn{background:#ffdd65;color:#47320a;animation:turnGlow 1.45s ease-in-out infinite}
+.turn-dot{width:9px;height:9px;border-radius:50%;background:#168b6f;flex:none}
+.own-turn .turn-dot{background:#a34a17;animation:nameBlink 1.45s ease-in-out infinite}
+@keyframes turnGlow{0%,100%{filter:brightness(1);box-shadow:0 0 0 2px #ffda6d66,0 0 10px #ffd45635}50%{filter:brightness(1.17);box-shadow:0 0 0 4px #ffda6daa,0 0 22px #ffd456a0}}
+@keyframes nameBlink{0%,100%{opacity:1}50%{opacity:.38}}
+.round-dialog{width:min(470px,calc(100vw - 32px));max-height:min(84dvh,700px);overflow-y:auto;text-align:center;border:2px solid #e5c569;box-shadow:0 14px 50px #0008}
+.round-dialog h3{margin:0 0 15px;font-size:clamp(19px,4vw,27px);color:#194c42}
+.round-dialog button{margin-top:15px;padding:11px 25px}
+.round-dialog .trophy{font-size:50px;line-height:1.3;margin:5px 0 10px}
+#winnerName{font-size:clamp(19px,5vw,30px);font-weight:850;line-height:1.25;color:#8d5105;margin:15px 0}
+#winnerInfo{font-size:14px;line-height:1.6}
+#winnerDialog.championship{background:linear-gradient(155deg,#fff8dc,#ffe4a4)}
+.result-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #dec9a6;padding:6px 2px;margin:0;font-size:13px;text-align:left}
+.result-row strong{white-space:nowrap}
+.result-verdict{padding:12px 8px;margin:15px 0 5px;border-radius:8px;background:#dfe8d3;color:#235b43;font-weight:800}
+.result-champion{margin:12px 0;padding:14px 8px;border-radius:10px;background:#f5cc68;color:#603902;font-weight:900;font-size:clamp(16px,4vw,22px)}
+@media(max-width:520px){#turnNotice{font-size:10px;padding:3px 9px;margin-bottom:2px}.turn-label{font-size:8px}#handArea h3{font-size:11px}}
+@media(max-width:850px) and (max-height:650px){#turnNotice{padding:2px 8px;font-size:9px;margin-bottom:1px}}
+@media(prefers-reduced-motion:reduce){.player.active,.player.active b,#turnNotice.own-turn,.own-turn .turn-dot{animation:none}}
+
+/* V13 — entrada e convites por sala */
+[hidden]{display:none!important}
+.room-landing{min-height:calc(100dvh - 55px);display:grid;place-items:center;padding:22px;background:radial-gradient(ellipse,#0b8175,#052a27)}
+.room-card{width:min(440px,100%);padding:clamp(22px,5vw,38px);background:#103e39;border:2px solid #eac46c;border-radius:20px;box-shadow:0 20px 60px #001c1b99;text-align:center}
+.room-card h1{margin:0;font-size:clamp(24px,5vw,36px)}.room-card p{color:#d3e7df}.room-card label{text-align:left}.room-card input{font-size:16px}
+.room-card .primary-room{width:100%;font-size:18px;padding:13px;margin:14px 0}.join-row{display:flex;gap:6px;align-items:end}.join-row input{min-width:0;flex:1}.join-row button{flex:none}
+#roomBar{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;padding:6px 10px;background:#124640;font-size:13px}#roomBar span{font-weight:800;letter-spacing:1px}#roomBar button{padding:6px 12px}
+body:not(.has-room) #settingsBtn{display:none}body.has-room #gameMain{min-height:0}
+@media(max-width:500px){.join-row{flex-wrap:wrap}.join-row input{flex-basis:100%}.join-row button{width:100%}#roomBar{gap:4px}#roomBar button{font-size:11px}}

@@ -1,0 +1,1 @@
+{"version":2,"functions":{"api/game.js":{"maxDuration":300}},"rewrites":[{"source":"/socket","destination":"/api/game"},{"source":"/","destination":"/index.html"}]}

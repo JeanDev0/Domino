@@ -1,0 +1,1 @@
+{"name":"domino-vercel","version":"13.0.0","private":true,"type":"commonjs","scripts":{"start":"node local.js","check":"node --check api/game.js && node --check local.js"},"dependencies":{"ws":"^8.18.0","ioredis":"^5.4.2"},"engines":{"node":">=20"}}
